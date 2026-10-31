@@ -34,8 +34,8 @@ jobs:
           Write-Host "Executavel: $exe"
           Write-Host "Entrada: $inputFile"
           Write-Host "Saida: $outFile"
-          & $exe --no-splash --game sa_mobile --compile $inputFile $outFile
-          Write-Host "ExitCode: $LASTEXITCODE"
+          $proc = Start-Process -FilePath $exe -ArgumentList @('--no-splash','--game','sa_mobile','--compile',('"' + $inputFile + '"'),('"' + $outFile + '"')) -PassThru -Wait
+          Write-Host "ExitCode: $($proc.ExitCode)"
           Write-Host 'Listagem de arquivos .csi e logs:'
           Get-ChildItem -Path '.' -Recurse -File | Where-Object { $_.Extension -in @('.csi','.log') } | Select-Object -ExpandProperty FullName | ForEach-Object { Write-Host $_ }
           Get-ChildItem -Path '.' -Recurse -Filter 'compile.log' -File | ForEach-Object { Write-Host ('LOG: ' + $_.FullName); Get-Content $_.FullName }
