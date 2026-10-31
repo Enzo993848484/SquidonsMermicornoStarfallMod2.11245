@@ -1,0 +1,17 @@
+
+{
+  "mod": "Mermicorno Starfall Squidons",
+  "character": "Squidon",
+  "textures": {
+    "body_main": "#91D64B",
+    "body_dark": "#368A45",
+    "body_beige": "#D8C89B",
+    "eyes": "#FFE34D",
+    "details": "#F5D63D",
+    "purple_ink": "#A44DFF"
+  },
+  "effects": {
+    "purple_ink": true,
+    "magic_transformation": true
+  }
+}

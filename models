@@ -1,0 +1,28 @@
+
+{
+  "mod": "SquidonsMermicornoStarfallMod2.11245",
+  "game": "GTA San Andreas Android",
+  "version": "2.11.245",
+  "character": {
+    "name": "Squidon",
+    "type": "NPC",
+    "model": "squidon.dff",
+    "texture": "squidon.txd",
+    "animation": "squidon.ifp",
+    "colors": {
+      "body": "#91D64B",
+      "body_dark": "#368A45",
+      "belly": "#D8C89B",
+      "eyes": "#FFE34D",
+      "details": "#F5D63D"
+    },
+    "features": {
+      "tentacles": true,
+      "walk": true,
+      "run": true,
+      "follow_player": true,
+      "purple_ink_power": true,
+      "npc_transformation": true
+    }
+  }
+}

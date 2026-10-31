@@ -1,0 +1,44 @@
+
+{
+  "mod": "Mermicorno Starfall Squidons",
+  "game": "GTA San Andreas Android",
+  "version": "2.11.245",
+  "animations": [
+    {
+      "name": "SQUIDON_IDLE",
+      "action": "parado",
+      "loop": true,
+      "duration": 2.0
+    },
+    {
+      "name": "SQUIDON_WALK",
+      "action": "andar",
+      "loop": true,
+      "duration": 1.0
+    },
+    {
+      "name": "SQUIDON_RUN",
+      "action": "correr",
+      "loop": true,
+      "duration": 0.6
+    },
+    {
+      "name": "SQUIDON_TENTACLE",
+      "action": "mexer_tentaculos",
+      "loop": true,
+      "duration": 1.5
+    },
+    {
+      "name": "SQUIDON_INK",
+      "action": "soltar_tinta_roxa",
+      "loop": false,
+      "duration": 1.2
+    },
+    {
+      "name": "SQUIDON_TRANSFORM",
+      "action": "transformar_personagem",
+      "loop": false,
+      "duration": 3.0
+    }
+  ]
+}

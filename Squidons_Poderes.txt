@@ -1,0 +1,76 @@
+
+{$CLEO .csi}
+
+0000:
+
+// MERMICORNO STARFALL - SQUIDONS
+// GTA SAN ANDREAS ANDROID 2.11.245
+// PROTOTIPO DOS 5 PODERES
+
+// 1. TINTA ROXA
+// 2. TRANSFORMACAO
+// 3. MAGIA
+// 4. PROTECAO
+// 5. SEGUIR CJ
+
+:INICIO
+0001: wait 0 ms
+
+00D6: if 0
+0256: player $PLAYER_CHAR defined
+004D: jump_if_false @INICIO
+
+// Carregar modelo de teste
+0247: request_model #MALE01
+038B: load_requested_models
+
+:CARREGAR
+0001: wait 0 ms
+
+00D6: if 0
+0248: model #MALE01 available
+004D: jump_if_false @CARREGAR
+
+// Posicao perto do CJ
+04C4: store_coords_to 1@ 2@ 3@ from_actor $PLAYER_ACTOR with_offset 0.0 3.0 0.0
+
+// Criar aliado temporario
+009A: 0@ = create_actor_pedtype 4 model #MALE01 at 1@ 2@ 3@
+
+0249: release_model #MALE01
+
+// PODER 1 - EFEITO DE TINTA
+// Fumaca temporaria para teste
+064B: 4@ = create_particle "SMOKE" at 1@ 2@ 3@ type 1
+064C: make_particle 4@ visible
+
+0001: wait 1500 ms
+
+0650: destroy_particle 4@
+
+// PODER 2 - TRANSFORMACAO
+// O modelo Squidon sera integrado depois
+// quando squidon.dff estiver pronto
+
+// PODER 3 - MAGIA
+// Efeito de particulas ja ativado acima
+
+// PODER 4 - PROTECAO
+// Resistencia do aliado
+0223: set_actor 0@ health_to 500
+02AB: set_actor 0@ immunities BP 1 FP 1 EP 1 CP 1 MP 1
+
+// PODER 5 - SEGUIR CJ
+:SEGUIR
+0001: wait 2000 ms
+
+00D6: if 0
+056D: actor 0@ defined
+004D: jump_if_false @FIM
+
+05D9: AS_actor 0@ run_to_actor $PLAYER_ACTOR timelimit 2000 stop_within_radius 3.0
+
+0002: jump @SEGUIR
+
+:FIM
+0A93: end_custom_thread
