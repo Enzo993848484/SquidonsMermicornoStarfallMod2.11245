@@ -31,7 +31,14 @@ jobs:
           $exe = (Get-ChildItem 'sanny' -Recurse -Filter 'sanny.exe' -File | Select-Object -First 1).FullName
           $inputFile = (Resolve-Path 'scripts/Squidons_Poderes.txt').Path
           $outFile = Join-Path (Resolve-Path 'dist').Path 'Squidons_Poderes.csi'
+          Write-Host "Executavel: $exe"
+          Write-Host "Entrada: $inputFile"
+          Write-Host "Saida: $outFile"
           & $exe --no-splash --game sa_mobile --compile $inputFile $outFile
+          Write-Host "ExitCode: $LASTEXITCODE"
+          Write-Host 'Listagem de arquivos .csi e logs:'
+          Get-ChildItem -Path '.' -Recurse -File | Where-Object { $_.Extension -in @('.csi','.log') } | Select-Object -ExpandProperty FullName | ForEach-Object { Write-Host $_ }
+          Get-ChildItem -Path '.' -Recurse -Filter 'compile.log' -File | ForEach-Object { Write-Host ('LOG: ' + $_.FullName); Get-Content $_.FullName }
           if (-not (Test-Path $outFile)) {
             Get-ChildItem 'sanny' -Recurse -Filter 'compile.log' -File | ForEach-Object { Get-Content $_.FullName }
             throw 'Falha na compilacao: CSI nao foi produzido'
