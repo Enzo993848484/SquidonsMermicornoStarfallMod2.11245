@@ -1,0 +1,2 @@
+
+& $exe --no-splash --game sa_mobile --compile "scripts/Squidons_Poderes.txt" "dist/Squidons_Poderes.csi"
