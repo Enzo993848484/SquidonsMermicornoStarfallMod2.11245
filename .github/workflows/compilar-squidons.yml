@@ -1,0 +1,46 @@
+name: Compilar Squidons Android
+
+on:
+  push:
+    paths:
+      - "scripts/**"
+      - ".github/workflows/compilar-squidons.yml"
+  workflow_dispatch:
+
+jobs:
+  compilar:
+    runs-on: windows-latest
+    steps:
+      - name: Obter codigo
+        uses: actions/checkout@v4
+
+      - name: Baixar Sanny Builder oficial
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Invoke-WebRequest -Uri 'https://github.com/sannybuilder/dev/releases/download/v4.2.0/SannyBuilder-v4.2.0.zip' -OutFile 'sanny.zip'
+          Expand-Archive -Path 'sanny.zip' -DestinationPath 'sanny' -Force
+          $exe = Get-ChildItem 'sanny' -Recurse -Filter 'sanny.exe' -File | Select-Object -First 1
+          if (-not $exe) { throw 'sanny.exe nao foi encontrado no pacote oficial' }
+
+      - name: Compilar CLEO no modo sa_mobile
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Path dist -Force | Out-Null
+          $exe = (Get-ChildItem 'sanny' -Recurse -Filter 'sanny.exe' -File | Select-Object -First 1).FullName
+          $inputFile = (Resolve-Path 'scripts/Squidons_Poderes.txt').Path
+          $outFile = Join-Path (Resolve-Path 'dist').Path 'Squidons_Poderes.csi'
+          & $exe --no-splash --game sa_mobile --compile $inputFile $outFile
+          if (-not (Test-Path $outFile)) {
+            Get-ChildItem 'sanny' -Recurse -Filter 'compile.log' -File | ForEach-Object { Get-Content $_.FullName }
+            throw 'Falha na compilacao: CSI nao foi produzido'
+          }
+          Write-Host "CSI gerado: $outFile"
+
+      - name: Publicar mod para baixar
+        uses: actions/upload-artifact@v4
+        with:
+          name: Squidons-Poderes-CSI
+          path: dist/Squidons_Poderes.csi
+          if-no-files-found: error
