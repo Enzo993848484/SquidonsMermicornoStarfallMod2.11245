@@ -1,0 +1,19 @@
+name: Squidons GTA SA Mobile
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verificar:
+    runs-on: windows-latest
+
+    steps:
+      - name: Abrir projeto
+        uses: actions/checkout@v4
+
+      - name: Verificar modo sa_mobile
+        shell: pwsh
+        run: |
+          Write-Host "Modo desejado: sa_mobile"
+          Write-Host "Projeto Squidons preparado"
+ aonde coloca
